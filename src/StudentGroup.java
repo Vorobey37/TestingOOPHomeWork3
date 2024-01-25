@@ -12,6 +12,10 @@ public class StudentGroup implements Iterable<Student>{
         this.students = students;
     }
 
+    public void createStudent(String firstName, String lastName, String middleName){
+        students.add(new Student(firstName, lastName, middleName));
+    }
+
     @Override
     public Iterator<Student> iterator() {
         return new StudentGroupIterator(this);

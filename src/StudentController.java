@@ -1,11 +1,12 @@
 import java.util.List;
 
-public class Controller {
+public class StudentController implements UserController<Student>{
 
     private final StudentGroupService STUDENTGROUPSERVICE = new StudentGroupService();
     private final StreamService STREAMSERVICE;
+    private final StudentView STUDENTVIEW = new StudentView();
 
-    public Controller(Stream stream) {
+    public StudentController(Stream stream) {
         this.STREAMSERVICE = new StreamService(stream);
     }
 
@@ -14,11 +15,15 @@ public class Controller {
     }
 
     public List<Student> getSortedStudentList(){
-        return STUDENTGROUPSERVICE.getSortedStudentList();
+        List<Student> studentList = STUDENTGROUPSERVICE.getSortedStudentList();
+        STUDENTVIEW.sendOnConsole(studentList);
+        return studentList;
     }
 
     public List<Student> getSortedByFIO(){
-        return STUDENTGROUPSERVICE.getSortedByFIO();
+        List<Student> studentList = STUDENTGROUPSERVICE.getSortedByFIO();
+        STUDENTVIEW.sendOnConsole(studentList);
+        return studentList;
     }
 
     public List<StudentGroup> sortSteamByStudentGroupSize(){
@@ -26,4 +31,8 @@ public class Controller {
     }
 
 
+    @Override
+    public void create(String firstName, String lastName, String middleName) {
+        STUDENTGROUPSERVICE.createStudent(firstName, lastName, middleName);
+    }
 }
